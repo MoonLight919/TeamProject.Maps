@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ТеаmGoogleMap.Maps", "ТеаmGoogleMap.Maps\ТеаmGoogleMap.Maps.csproj", "{4C5A9DF4-AB21-419B-B81A-0988A393CA54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForCoordinateFilling", "ForCoordinateFilling\ForCoordinateFilling.csproj", "{BB02027B-D8AE-465B-A6BE-AB7B38424AD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C5A9DF4-AB21-419B-B81A-0988A393CA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C5A9DF4-AB21-419B-B81A-0988A393CA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C5A9DF4-AB21-419B-B81A-0988A393CA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C5A9DF4-AB21-419B-B81A-0988A393CA54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB02027B-D8AE-465B-A6BE-AB7B38424AD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB02027B-D8AE-465B-A6BE-AB7B38424AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB02027B-D8AE-465B-A6BE-AB7B38424AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB02027B-D8AE-465B-A6BE-AB7B38424AD7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5889DA50-2678-47A3-8C34-60BF41B1CC94}
+	EndGlobalSection
+EndGlobal

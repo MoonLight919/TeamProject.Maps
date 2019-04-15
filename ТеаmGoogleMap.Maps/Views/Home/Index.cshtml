@@ -1,0 +1,94 @@
+﻿@using ТеаmGoogleMap.Maps.Models
+@model List<AddressVM>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div id="map_canvas" style="height: 600px"></div>
+
+@section MyScript
+{
+
+<script>
+    $(function () {
+        var arrMarkers = [];
+        var arrInfoWindows = [];
+        var map, directionsService, directionsDisplay;
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(50.44, 30.61);
+            var myOptions = {
+                zoom: 15,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            directionsService = new google.maps.DirectionsService;
+            directionsDisplay = new google.maps.DirectionsRenderer;
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            directionsDisplay.setMap(map);
+        }
+        function fill()
+        {
+            var markerlatLng, title, description, contentString, infowindow, marker;
+            @foreach (var item in Model) {
+                <text>
+                markerlatLng = new google.maps.LatLng(parseFloat(@item.Latitude), parseFloat(@item.Longitude));
+                title = '@item.House, @item.StreetName';
+                description = 'Served by @item.SubdivisionName';
+                contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>'
+
+                infowindow = new google.maps.InfoWindow({
+                content: contentString
+                });
+
+                marker = new google.maps.Marker({
+                    position: markerlatLng,
+                    title: title,
+                    map: map,
+                    draggable: false
+                });
+
+                arrMarkers.push(marker);
+                arrInfoWindows.push(infowindow);
+                </text>
+                }
+            for (var i = 0; i < arrMarkers.length; i++) {
+                google.maps.event.addListener(arrMarkers[i], 'click', function () {
+                    arrInfoWindows[i].open(map, arrMarkers[i]);
+                });
+            };
+        }
+        function buildRoute()
+        {
+            directionsService.route({
+                origin: arrMarkers[1093].title,
+                destination: arrMarkers[1004].title,
+                waypoints: [],
+                optimizeWaypoints: true,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                    //var route = response.routes[0];
+                    //var summaryPanel = document.getElementById('directions-panel');
+                    //summaryPanel.innerHTML = '';
+                    //for (var i = 0; i < route.legs.length; i++) {
+                    //    var routeSegment = i + 1;
+                    //    summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                    //        '</b><br>';
+                    //    summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                    //    summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                    //    summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+                    //}
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+        initialize();
+        fill();
+        buildRoute();
+    });
+</script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2x0YOLeRMePiIUr-aQFv7i31HZPdHWEo&callback=myMap"></script>
+}
