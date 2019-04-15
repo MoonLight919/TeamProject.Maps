@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ТеаmGoogleMap.Maps.Models;
 
 namespace ТеаmGoogleMap.Maps.Controllers
@@ -76,12 +78,7 @@ namespace ТеаmGoogleMap.Maps.Controllers
                     СountFloor = item.СountFloor
                 });
             }
-            //List<JsonResult> jsons = new List<JsonResult>();
-            //foreach (var item in model)
-            //{
-            //    jsons.Add(Json(item));
-            //}
-            //JsonResult a;
+            string output = JsonConvert.SerializeObject(model);
             return View(model);
         }
     }

@@ -5,16 +5,17 @@
 }
 
 <h2>Index</h2>
+<input type="text" />
 <div id="map_canvas" style="height: 600px"></div>
 
 @section MyScript
 {
 
-<script>
+    <script>
     $(function () {
         var arrMarkers = [];
         var arrInfoWindows = [];
-        var map, directionsService, directionsDisplay;
+        var map, directionsService, directionsDisplay, currentlyOpened;
         function initialize() {
             var myLatlng = new google.maps.LatLng(50.44, 30.61);
             var myOptions = {
@@ -47,16 +48,20 @@
                     map: map,
                     draggable: false
                 });
-
                 arrMarkers.push(marker);
                 arrInfoWindows.push(infowindow);
                 </text>
                 }
-            for (var i = 0; i < arrMarkers.length; i++) {
+            for (let i = 0; i < arrMarkers.length; i++) {
                 google.maps.event.addListener(arrMarkers[i], 'click', function () {
+                    if (currentlyOpened != undefined)
+                        currentlyOpened.close();
+                    currentlyOpened = arrInfoWindows[i];
                     arrInfoWindows[i].open(map, arrMarkers[i]);
                 });
             };
+            var markerCluster = new MarkerClusterer(map, arrMarkers,
+                { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
         }
         function buildRoute()
         {
@@ -85,10 +90,14 @@
                 }
             });
         }
+
         initialize();
         fill();
         buildRoute();
     });
-</script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2x0YOLeRMePiIUr-aQFv7i31HZPdHWEo&callback=myMap"></script>
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2x0YOLeRMePiIUr-aQFv7i31HZPdHWEo&callback=myMap">
+    </script>
 }
