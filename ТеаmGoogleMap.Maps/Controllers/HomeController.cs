@@ -78,8 +78,8 @@ namespace ТеаmGoogleMap.Maps.Controllers
                     СountFloor = item.СountFloor
                 });
             }
-            string output = JsonConvert.SerializeObject(model);
-            return View(model);
+            object output = JsonConvert.SerializeObject(model);
+            return View(output);
         }
     }
 }

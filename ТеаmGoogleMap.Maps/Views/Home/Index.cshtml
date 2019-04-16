@@ -1,22 +1,41 @@
 ﻿@using ТеаmGoogleMap.Maps.Models
-@model List<AddressVM>
+@model string
 @{
     ViewBag.Title = "Index";
 }
 
+<style>
+    input,
+    select,
+    textarea {
+        max-width: 500px !important;
+        width: 250ch !important;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    #map_canvas {
+        height: 600px;
+    }
+</style>
+
 <h2>Index</h2>
-<input type="text" />
-<div id="map_canvas" style="height: 600px"></div>
+
+<input type="text"/>
+<div id="map_canvas"></div>
 
 @section MyScript
 {
 
-    <script>
+<script>
     $(function () {
         var arrMarkers = [];
         var arrInfoWindows = [];
         var map, directionsService, directionsDisplay, currentlyOpened;
-        function initialize() {
+        var json = @Html.Raw(Json.Encode(@Model));
+        var arr = JSON.parse(json);
+        function initialize()
+        {
             var myLatlng = new google.maps.LatLng(50.44, 30.61);
             var myOptions = {
                 zoom: 15,
@@ -28,18 +47,18 @@
             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             directionsDisplay.setMap(map);
         }
+
         function fill()
         {
             var markerlatLng, title, description, contentString, infowindow, marker;
-            @foreach (var item in Model) {
-                <text>
-                markerlatLng = new google.maps.LatLng(parseFloat(@item.Latitude), parseFloat(@item.Longitude));
-                title = '@item.House, @item.StreetName';
-                description = 'Served by @item.SubdivisionName';
+            Array.from(arr).forEach((obj) => {
+                markerlatLng = new google.maps.LatLng(parseFloat(obj.Latitude), parseFloat(obj.Longitude));
+                title = obj.House + ', ' + obj.StreetName;
+                description = 'Served by ' + obj.SubdivisionName;
                 contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>'
 
                 infowindow = new google.maps.InfoWindow({
-                content: contentString
+                    content: contentString
                 });
 
                 marker = new google.maps.Marker({
@@ -50,8 +69,7 @@
                 });
                 arrMarkers.push(marker);
                 arrInfoWindows.push(infowindow);
-                </text>
-                }
+            });
             for (let i = 0; i < arrMarkers.length; i++) {
                 google.maps.event.addListener(arrMarkers[i], 'click', function () {
                     if (currentlyOpened != undefined)
@@ -74,17 +92,6 @@
             }, function (response, status) {
                 if (status === 'OK') {
                     directionsDisplay.setDirections(response);
-                    //var route = response.routes[0];
-                    //var summaryPanel = document.getElementById('directions-panel');
-                    //summaryPanel.innerHTML = '';
-                    //for (var i = 0; i < route.legs.length; i++) {
-                    //    var routeSegment = i + 1;
-                    //    summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                    //        '</b><br>';
-                    //    summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                    //    summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                    //    summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                    //}
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
@@ -93,9 +100,9 @@
 
         initialize();
         fill();
-        buildRoute();
+        //buildRoute();
     });
-    </script>
+</script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2x0YOLeRMePiIUr-aQFv7i31HZPdHWEo&callback=myMap">
